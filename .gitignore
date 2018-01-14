@@ -1,25 +1,27 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
-
-/.vscode
-
-# dependencies
-/node_modules
-
-# testing
+# Exclude compiled files
+build
+/lib
+/.next
+/.eslintcache
+/docs/export
+/tmp
 /coverage
+/.nyc_output
 
-# production
-/build
+# OS files
+.DS_STORE
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Screenshors generated for Argos-CI
+/test/regressions/screenshots
+/test/selenium-output
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# npm files
+node_modules
+package-lock.json
+*.log
 
-yarn.lock
+# The best pattern people should follow is ignoring the editors' files in their
+# global .gitignore configuration file.
+# However, in order to prevent issues. We also ignore editors' files here.
+.idea
+.vscode
