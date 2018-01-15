@@ -10,6 +10,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import PersistentDrawer from './naviBar';
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -20,19 +21,6 @@ const theme = createMuiTheme({
   },
 });
 
-const styles = {
-  root: {
-    width: '100%',
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
-
 function withRoot(Component) {
   function WithRoot(props) {
     // MuiThemeProvider makes the theme available down the React tree
@@ -40,21 +28,14 @@ function withRoot(Component) {
     const { classes } = props;
     return (
       <MuiThemeProvider theme={theme}>
-        {/* Reboot kickstart an elegant, consistent, and simple baseline to build upon. */}
         <Reboot />
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="contrast" aria-label="Menu"><MenuIcon /></IconButton>
-            <Typography type="title" color="inherit" className={classes.flex}>God's Eye</Typography>
-            <Button color="contrast">Login</Button>
-          </Toolbar>
-        </AppBar>
+        <PersistentDrawer />
         <Component {...props} />
       </MuiThemeProvider>
     );
   }
 
-  return withStyles(styles)(WithRoot);
+  return WithRoot;
 }
 
 
