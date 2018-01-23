@@ -10,8 +10,8 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import SimpleSelect from './cardSelector';
 
-const dtFmt = require('dateformat');
-const dtSty = "yyyymmdd";
+// const dtFmt = require('dateformat');
+// const dtSty = "yyyymmdd";
 
 const styles = theme => ({
   card: {
@@ -37,11 +37,11 @@ const styles = theme => ({
   },
 });
 
-function fetchDates(x) {
-        let dn = new Date();
-        const k = dtFmt(dn.setDate(new Date().getDate()-x), dtSty);
-        return <MenuItem value={k}>{k}</MenuItem>;
-}
+// function fetchDates(x) {
+//         let dn = new Date();
+//         const k = dtFmt(dn.setDate(new Date().getDate()-x), dtSty);
+//         return <MenuItem value={k}>{k}</MenuItem>;
+// }
 
 
 function SimpleCard(props) {
@@ -60,7 +60,7 @@ function SimpleCard(props) {
         </CardContent>
         <CardActions>
           <Button dense>Download Report</Button>
-          <FormControl className={classes.formControl}>
+          {/* <FormControl className={classes.formControl}>
             <Select value={1} name="date" >
                 {fetchDates(1)}
                 {fetchDates(2)}
@@ -70,7 +70,8 @@ function SimpleCard(props) {
                 {fetchDates(6)}
                 {fetchDates(7)}
             </Select>
-          </FormControl>
+          </FormControl> */}
+          <SimpleSelect />
         </CardActions>
         <br/>
       </Card>
