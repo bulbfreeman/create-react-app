@@ -49,6 +49,11 @@ class PersistentDrawer extends React.Component {
     messages: en_US
   };
 
+  handleLogout = () => (e) => {
+    localStorage.clear();
+    window.location = '/login';
+  }
+
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -83,7 +88,7 @@ class PersistentDrawer extends React.Component {
           <Divider />
             <ListItem button>
               <ListItemIcon><ExitIcon /></ListItemIcon>
-              <ListItemText primary="Logout" />
+              <ListItemText primary="Logout"  onClick={this.handleLogout()}/>
             </ListItem>
           </List></div>
       </Drawer>
