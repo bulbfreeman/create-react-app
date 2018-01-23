@@ -3,33 +3,38 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import blueGrey from 'material-ui/colors/blueGrey';
 import red from 'material-ui/colors/red';
 import Reboot from 'material-ui/Reboot';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
-import PersistentDrawer from './naviBar';
 
-// A theme with custom primary and secondary color.
-// It's optional.
+
+const defaultTheme = createMuiTheme();
+
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'ibm'+'sans-serif',
+  },
   palette: {
-    primary: blueGrey,
-    secondary: red,
+    contrastThreshold: 3.1,
+    tonalOffset: 0.07,
+    primary: {
+      light: blueGrey[300],
+      main: blueGrey[500],
+      dark: blueGrey[700],
+      contrastText: defaultTheme.palette.getContrastText(blueGrey[500]),
+    },
+    secondary: {
+      light: red.A200,
+      main: red.A400,
+      dark: red.A700,
+      contrastText: defaultTheme.palette.getContrastText(red.A400),
+    },
+    error: red.A400,
   },
 });
 
 function withRoot(Component) {
   function WithRoot(props) {
-    // MuiThemeProvider makes the theme available down the React tree
-    // thanks to React context.
-    const { classes } = props;
     return (
       <MuiThemeProvider theme={theme}>
         <Reboot />
-        <PersistentDrawer />
         <Component {...props} />
       </MuiThemeProvider>
     );

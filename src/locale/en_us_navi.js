@@ -1,5 +1,5 @@
 const en_US = {
-    title: "God's Eye",
+    title: "CDMI",
     dashboard: "Dashboard",
     map: "Map",
     approval: "Approval",

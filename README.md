@@ -1,19 +1,19 @@
 
 
-# God's Eye Frontend Framework
+# CDMI Frontend Framework
 
 
-## Install it and run:
+## Install and run:
 ```bash
 npm install
 npm run start
 ```
+## In case of error, try:
+```bash
+ npm install material-ui@next -save
+```
 
-## WIP
-Dual Language Support \
-Sub-pages \
-Authentication \
-Map Integration \
-Back-end Integration
-
-
+## Build:
+```bash
+npm run build
+```

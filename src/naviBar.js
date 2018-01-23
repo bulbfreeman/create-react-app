@@ -5,33 +5,26 @@ import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import { MenuItem } from 'material-ui/Menu';
 import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui-icons/Menu';
 import ChevronLeft from 'material-ui-icons/ChevronLeft';
-import ChevronRight from 'material-ui-icons/ChevronRight';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import Inbox from 'material-ui-icons/Inbox';
-import Drafts from 'material-ui-icons/Drafts';
 import DashboardIcon from 'material-ui-icons/Dashboard';
 import MapIcon from 'material-ui-icons/Map';
-import PersonIcon from 'material-ui-icons/AccountBox';
+import ExitIcon from 'material-ui-icons/ExitToApp';
 import DoneIcon from 'material-ui-icons/DoneAll';
 import CompareIcon from 'material-ui-icons/CompareArrows';
 import LanguageIcon from 'material-ui-icons/Language';
-import Button from 'material-ui/Button';
 import Dashboard from './pages/dashboard';
-import MapPage from './pages/mapPage';
-import AppraisalPage from './pages/appraisalPage';
-import ApprovalPage from './pages/approvalPage';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
 import zh_CN from './locale/zh_cn_navi';
 import en_US from './locale/en_us_navi';
-import {IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+import { IntlProvider, FormattedMessage, addLocaleData } from 'react-intl';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import routes from './routes/routes';
 
 addLocaleData([...en,...zh]);
 
@@ -42,13 +35,16 @@ const styles = {
     loginButton: {
       float: 'right',
     },
+    link: {
+      textDecoration: 'none',
+    },
   };
 
 class PersistentDrawer extends React.Component {
+  static isPrivate = true;
+
   state = {
     open: false,
-    anchor: 'left',
-    content: <Dashboard />,
     locale: "en",
     messages: en_US
   };
@@ -61,12 +57,8 @@ class PersistentDrawer extends React.Component {
     this.setState({ open: false });
   };
 
-  handleContent = (c) => (e) => {
-    this.setState({ content: c });
-  };
-
   switchLang = () => (e) => {
-    if (this.state.locale=="en") {
+    if (this.state.locale==="en") {
       this.setState({locale: "zh", messages: zh_CN});
     } else {
       this.setState({locale: "en", messages: en_US});
@@ -74,42 +66,26 @@ class PersistentDrawer extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
-    const { anchor, open, content, locale, messages } = this.state;
+    const { classes } = this.props;
+    const { open, content, locale, messages } = this.state;
 
     const drawer = (
       <IntlProvider locale={locale} messages={messages}>
       <Drawer anchor='left' open={open} onClick={this.handleDrawerClose}>
             <IconButton><ChevronLeft /></IconButton>
           <Divider />
-          <div className={classes.list}><List>
-            <ListItem button onClick={this.handleContent(<Dashboard />)}>
+          <div className={classes.list}>
+          <List>
+            <Link to="/dashboard" className={classes.link}><ListItem button>
               <ListItemIcon><DashboardIcon /></ListItemIcon>
               <ListItemText primary={<FormattedMessage id="dashboard" />} />
-            </ListItem>
-            <ListItem button onClick={this.handleContent(<MapPage />)}>
-              <ListItemIcon><MapIcon /></ListItemIcon>
-              <ListItemText primary={<FormattedMessage id="map" />} />
-            </ListItem>
-            <ListItem button onClick={this.handleContent(<ApprovalPage />)}>
-              <ListItemIcon><DoneIcon /></ListItemIcon>
-              <ListItemText primary={<FormattedMessage id="approval" />} />
-            </ListItem>
-            <ListItem button onClick={this.handleContent(<AppraisalPage />)}>
-              <ListItemIcon><CompareIcon /></ListItemIcon>
-              <ListItemText primary={<FormattedMessage id="appraisal" />} />
-            </ListItem>
-          <Divider />
-          <ListItem button onClick={this.switchLang()}>
-            <ListItemIcon><LanguageIcon /></ListItemIcon>
-            <ListItemText primary={<FormattedMessage id="lang" />} />
-          </ListItem>
+            </ListItem></Link>
           <Divider />
             <ListItem button>
-              <ListItemIcon><PersonIcon /></ListItemIcon>
-              <ListItemText primary="Login" />
+              <ListItemIcon><ExitIcon /></ListItemIcon>
+              <ListItemText primary="Logout" />
             </ListItem>
-           </List></div>
+          </List></div>
       </Drawer>
       </IntlProvider>
     );
@@ -119,6 +95,8 @@ class PersistentDrawer extends React.Component {
 
     return (
         <div className={classes.appFrame}>
+        <Router>
+        <div>
         <IntlProvider locale={locale} messages={messages}>
           <AppBar>
             <Toolbar disableGutters={!open}>
@@ -136,8 +114,17 @@ class PersistentDrawer extends React.Component {
             </Toolbar>
           </AppBar>
         </IntlProvider>
-          {before}
-          {content}
+        {before}
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.main}
+          />
+        ))}
+        </div>
+        </Router>
         </div>
     );
   }
@@ -145,7 +132,6 @@ class PersistentDrawer extends React.Component {
 
 PersistentDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(PersistentDrawer);

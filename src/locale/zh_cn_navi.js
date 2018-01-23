@@ -1,10 +1,10 @@
 const zh_CN = {
-    title: "神之眼",
-    dashboard: "数据报表",
-    map: "地图",
-    approval: "审批",
-    appraisal: "鉴定",
-    login: "登陆",
-    lang: "Switch to ENG"
+    title: "CDMI",
+    dashboard: "Dashboard",
+    map: "Map",
+    approval: "Approval",
+    appraisal: "Appraisal",
+    login: "Login",
+    lang: "Switch to EN"
 };
 export default zh_CN;
