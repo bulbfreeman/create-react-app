@@ -4,12 +4,11 @@ import Button from 'material-ui/Button';
 import Dialog, { DialogTitle, DialogContent, DialogContentText, DialogActions, } from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import EnhancedTable from '../components/dashBoardComponents';
 import SimpleCard from '../components/card';
 
 const styles = theme => ({
-  root: {
-    paddingTop: 80,
+  subPage: {
+    paddingTop: 15,
     paddingLeft: 15,
     paddingRight: 15,
   },
@@ -39,7 +38,7 @@ class Dashboard extends React.Component {
     const { open } = this.state;
 
     return (
-      <div className={classes.root}>
+      <div className={classes.subPage}>
         <SimpleCard sysName={'MDS'} />
       </div>
     );

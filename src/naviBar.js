@@ -103,7 +103,7 @@ class PersistentDrawer extends React.Component {
         <Router>
         <div>
         <IntlProvider locale={locale} messages={messages}>
-          <AppBar>
+          <AppBar position="static">
             <Toolbar disableGutters={!open}>
               <IconButton
                 color="contrast"

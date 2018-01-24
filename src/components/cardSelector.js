@@ -9,6 +9,7 @@ import Select from 'material-ui/Select';
 const dtFmt = require('dateformat');
 
 const dtSty = "yyyymmdd";
+const dtStyN = "yyyy/mm/dd";
 
 const styles = theme => ({
   container: {
@@ -27,13 +28,13 @@ const styles = theme => ({
 function fetchDates(x) {
   let dn = new Date();
   const k = dtFmt(dn.setDate(new Date().getDate()-x), dtSty);
-  return <MenuItem value={k}>{k}</MenuItem>;
+  const n = dtFmt(dn.setDate(new Date().getDate()-x), dtStyN);
+  return <MenuItem value={k}>{n}</MenuItem>;
 }
 
 class SimpleSelect extends React.Component {
   state = {
-    age: '',
-    name: 'hai',
+    date: '',
   };
 
   handleChange = event => {
@@ -47,9 +48,9 @@ class SimpleSelect extends React.Component {
       <form className={classes.container} autoComplete="off">
         <FormControl className={classes.formControl}>
           <Select
-            value={this.state.age}
+            value={this.state.date}
             onChange={this.handleChange}
-            input={<Input name="age" id="age-simple" />}
+            input={<Input name="date" id="date-simple" />}
           >
             {fetchDates(1)}
             {fetchDates(2)}
