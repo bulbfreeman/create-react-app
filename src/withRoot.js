@@ -9,7 +9,7 @@ const defaultTheme = createMuiTheme();
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'ibm'+'sans-serif',
+    fontFamily: 'ibm',
   },
   palette: {
     contrastThreshold: 3.1,
@@ -21,7 +21,7 @@ const theme = createMuiTheme({
       contrastText: defaultTheme.palette.getContrastText(blueGrey[500]),
     },
     secondary: {
-      light: red.A200,
+      light: red.A400,
       main: red.A400,
       dark: red.A700,
       contrastText: defaultTheme.palette.getContrastText(red.A400),

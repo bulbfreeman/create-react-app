@@ -12,12 +12,7 @@ import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import DashboardIcon from 'material-ui-icons/Dashboard';
-import MapIcon from 'material-ui-icons/Map';
 import ExitIcon from 'material-ui-icons/ExitToApp';
-import DoneIcon from 'material-ui-icons/DoneAll';
-import CompareIcon from 'material-ui-icons/CompareArrows';
-import LanguageIcon from 'material-ui-icons/Language';
-import Dashboard from './pages/dashboard';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
 import zh_CN from './locale/zh_cn_navi';
@@ -72,7 +67,7 @@ class PersistentDrawer extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { open, content, locale, messages } = this.state;
+    const { open, locale, messages } = this.state;
 
     const drawer = (
       <IntlProvider locale={locale} messages={messages}>

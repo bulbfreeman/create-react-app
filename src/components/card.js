@@ -4,79 +4,70 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Input, { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
 import SimpleSelect from './cardSelector';
-
-// const dtFmt = require('dateformat');
-// const dtSty = "yyyymmdd";
 
 const styles = theme => ({
   card: {
     maxWidth: 310,
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-    color: theme.palette.text.secondary,
-  },
-  pos: {
-    marginBottom: 12,
-    color: theme.palette.text.secondary,
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
 });
 
-// function fetchDates(x) {
-//         let dn = new Date();
-//         const k = dtFmt(dn.setDate(new Date().getDate()-x), dtSty);
-//         return <MenuItem value={k}>{k}</MenuItem>;
-// }
+const baseAPI = "http://SGNPF0SXXC5:20017/";
 
+class SimpleCard extends React.Component {
 
-function SimpleCard(props) {
-  const { classes } = props;
-  const system = props.sysName;
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography type="headline" component="h2">{system}</Typography>
-          <Typography component="p">
-          <p>Total Breaks: </p> 
-          <p>New Breaks: </p>
-          <p>Report Status: </p> 
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button dense>Download Report</Button>
-          {/* <FormControl className={classes.formControl}>
-            <Select value={1} name="date" >
-                {fetchDates(1)}
-                {fetchDates(2)}
-                {fetchDates(3)}
-                {fetchDates(4)}
-                {fetchDates(5)}
-                {fetchDates(6)}
-                {fetchDates(7)}
-            </Select>
-          </FormControl> */}
-          <SimpleSelect />
-        </CardActions>
-        <br/>
-      </Card>
-    </div>
-  );
+  state = {
+    date: '',
+    status: 'Not Available',
+    total: 'N/A',
+    newBk: 'N/A',
+  };
+
+  onDateChange = (dt) => {
+    this.setState({date: dt});
+
+    fetch(baseAPI+`summary/MDS/`+dt)
+		.then(r=>r.json())
+		.then(data=>this.setState({total: data.total, newBk: data.new}))
+    .catch(this.setState({total: 'N/A', newBk: 'N/A'}));
+    
+		fetch(baseAPI+`status/MDS/`+dt)
+		.then(r=>r.json())
+		.then(data=>this.setState({status: data.status}))
+		.catch(this.setState({status: 'Not Available'}));
+  }
+
+  dlRpt = () => {
+		var a = document.createElement('a');
+    a.href = baseAPI+`report/`+this.props.sysName+`/`+this.state.date;
+    a.download="CDMI-"+this.props.sysName+"-"+this.state.date+".xlsx";
+    a.click();
+  }
+
+  render(){
+    const { classes } = this.props;
+    const system = this.props.sysName;
+    return (
+      <div>
+        <Card className={classes.card} elevation={7}>
+          <CardContent>
+            <Typography color="primary" type="headline" component="h2">{system}</Typography>
+              <Typography component="p">
+                <br/>
+                Total Breaks: {this.state.total}<br/>
+                New Breaks: {this.state.newBk}<br/>
+                Report Status: {this.state.status}
+              </Typography>
+          </CardContent>
+          <CardActions>
+            <SimpleSelect passDate={this.onDateChange.bind(this)} />
+            <Button raised dense color="primary" onClick={()=>{this.dlRpt()}}>Download Report</Button>
+          </CardActions>
+          <br/>
+        </Card>
+      </div>
+    );
+  }
 }
 
 SimpleCard.propTypes = {

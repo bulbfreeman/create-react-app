@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 import withRoot from '../withRoot';
-import { AUTHENTICATED } from '../actions';
 import reduxThunk from 'redux-thunk';
 import reducers from '../reducers/reducer';
 import { createStore, applyMiddleware } from 'redux';

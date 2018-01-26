@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Visibility from 'material-ui-icons/Visibility';
 import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import AccountIcon from 'material-ui-icons/AccountCircle';
@@ -62,7 +61,7 @@ class Login extends React.Component {
     
     render() {
         const { classes, handleSubmit } = this.props;
-        const { warningMsg, locale, messages } = this.state;
+        const { warningMsg } = this.state;
 
 
         return (
